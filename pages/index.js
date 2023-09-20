@@ -1,6 +1,7 @@
 import fs from "fs/promises";
 import path from "path";
 import Link from "next/link";
+
 const HomePage = ({ products }) => {
   return (
     <ul>
@@ -14,10 +15,20 @@ const HomePage = ({ products }) => {
   );
 };
 
-export async function getStaticProps() {
+const getData = async () => {
   const pathFile = path.join(process.cwd(), "data", "data.json");
   const resData = await fs.readFile(pathFile);
   const data = JSON.parse(resData);
+
+  return data;
+};
+
+export async function getStaticProps() {
+  // const pathFile = path.join(process.cwd(), "data", "data.json");
+  // const resData = await fs.readFile(pathFile);
+  // const data = JSON.parse(resData);
+
+  const data = await getData();
 
   if (!data) {
     return {
